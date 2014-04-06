@@ -27,6 +27,20 @@ class IndexController extends AbstractActionController
 
     public function indexAction()
     {
+	    $objectManager = $this
+		    ->getServiceLocator()
+		    ->get('Doctrine\ORM\EntityManager');
+
+	    $soapActionLog = new \Application\Entity\SoapActionLog();
+	    $soapActionLog->setResponse('1231238791732');
+	    $soapActionLog->setRequest('1231238791732');
+	    $soapActionLog->setDate();
+
+	    $objectManager->persist($soapActionLog);
+	    $objectManager->flush();
+
+	    $soapActionLog->getId();
+
         return new ViewModel();
     }
 
