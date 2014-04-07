@@ -1,23 +1,42 @@
 <?php
 namespace Application\Services;
 
+use Symfony\Component\Console\Application;
 use Zend\Text\Exception\UnexpectedValueException;
 
-interface StringReverserInterface
-{
-	public function reverseString($string);
-}
 
-class StringReverser implements StringReverserInterface
+/**
+ * Class StringReverser
+ * @package Application\Services
+ */
+class StringReverser implements \Application\Services\StringReverserInterface
 {
 	/**
-	 * Returns test list
+	 * Logging action object
+	 *
+	 * @var
+	 */
+	protected $actionLogger;
+
+	/**
+	 * Sets action logger instance
+	 *
+	 * @param ActionLoggerInterface $actionLogger
+	 */
+	public function setActionLogger(\Application\Services\ActionLoggerInterface $actionLogger)
+	{
+		$this->actionLogger = $actionLogger;
+	}
+
+	/**
+	 * Returns reversed string
 	 *
 	 * @param $string
 	 * @return string
 	 */
 	public function reverseString($string)
 	{
+		// initialize of variable for understanding variable type
 		$reversedString = "";
 
 		if(empty($string))
@@ -29,11 +48,26 @@ class StringReverser implements StringReverserInterface
 			throw new UnexpectedValueException("Given string should be exactly 64 characters length. String length is: " . strlen($string));
 		}
 
-		$reversedString = strrev($string);
+		try
+		{
+			$reversedString = strrev($string);
+		}
+		catch(Exception $e)
+		{
+			echo 'Error reversing string: ' .  $e->getMessage();
+		}
 
-		//$logger = new \Application\Services\ActionLogger();
-
-		//$logger->logAction($string, $reversedString);
+		if($this->actionLogger != null)
+		{
+			try
+			{
+				$this->actionLogger->logAction($string, $reversedString);
+			}
+			catch(Exception $e)
+			{
+				echo 'Action logger exception: ' .  $e->getMessage();
+			}
+		}
 
 		return $reversedString;
 	}

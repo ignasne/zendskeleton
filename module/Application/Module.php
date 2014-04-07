@@ -16,7 +16,7 @@ class Module
 {
     public function onBootstrap(MvcEvent $e)
     {
-        $eventManager        = $e->getApplication()->getEventManager();
+        $eventManager = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
     }
@@ -26,29 +26,20 @@ class Module
         return include __DIR__ . '/config/module.config.php';
     }
 
-	public function getControllerConfig()
-	{
-		return array(
-			'factories' => array(
-				'index-controller' => function ($sm) {
-						$controller = new Controller\IndexController();
-						$controller->setStringReverserService(
-							$sm->get('Application\Services\StringReverser')
-						);
-					},
-			),
-		);
-	}
-
 	public function getServiceConfig()
 	{
 		return array(
 			'factories' => array(
 				'Application\Services\StringReverser' => function ($sm) {
-						$stringReverserService = new Services\StringReverser();
+					$stringReverserService = new \Application\Services\StringReverser();
 
-						return $stringReverserService;
-					},
+					$actionLogger = new Services\ActionLogger();
+					$actionLogger->setOrm($sm->get('Doctrine\ORM\EntityManager'));
+
+					$stringReverserService->setActionLogger($actionLogger);
+
+					return $stringReverserService;
+				},
 			),
 		);
 	}
