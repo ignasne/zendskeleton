@@ -9,6 +9,7 @@
 
 namespace Application\Controller;
 
+use Composer\Console\Application;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
@@ -16,30 +17,30 @@ use Zend\Soap\Client;
 use Zend\Soap\Server;
 use Zend\Soap\AutoDiscover;
 
-require_once 'C:\www\zendskeleton\module\Application\src\Services\Services.php';
+use Application\Services;
+
+require_once 'C:\www\zendskeleton\module\Application\src\Services\StringReverser.php';
+require_once 'C:\www\zendskeleton\module\Application\src\Services\ActionLogger.php';
 
 class IndexController extends AbstractActionController
 {
+	protected $service;
+
 	public function init()
 	{
 
 	}
 
+	public function setStringReverserService(Services\StringReverser $service)
+	{
+		$this->service = $service;
+	}
+
     public function indexAction()
     {
-	    $objectManager = $this
-		    ->getServiceLocator()
-		    ->get('Doctrine\ORM\EntityManager');
 
-	    $soapActionLog = new \Application\Entity\SoapActionLog();
-	    $soapActionLog->setResponse('1231238791732');
-	    $soapActionLog->setRequest('1231238791732');
-	    $soapActionLog->setDate();
 
-	    $objectManager->persist($soapActionLog);
-	    $objectManager->flush();
-
-	    $soapActionLog->getId();
+	    print_r($this->service->reverseString("abc")); die();
 
         return new ViewModel();
     }
@@ -49,7 +50,7 @@ class IndexController extends AbstractActionController
 		$server = new Server(null,
 			array('uri' => 'http://zendskeleton.localhost/application/index/wsdl'));
 
-		$server->setClass('Services');
+		$server->setClass('StringReverser');
 
 		$server->handle();
 
@@ -60,7 +61,7 @@ class IndexController extends AbstractActionController
 	{
 		$wsdl = new AutoDiscover();
 
-		$wsdl->setClass('Services');
+		$wsdl->setClass('StringReverser');
 
 		$wsdl->setUri('http://zendskeleton.localhost/application/index/soap');
 
@@ -74,7 +75,7 @@ class IndexController extends AbstractActionController
 
 		$client = new Client($url);
 
-		print_r($client->testSoap());
+		print_r($client->reverseString("abc"));
 
 		return $this->getResponse();
 	}

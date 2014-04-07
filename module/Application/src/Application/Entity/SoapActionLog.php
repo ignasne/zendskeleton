@@ -21,6 +21,10 @@ class SoapActionLog {
 	/** @ORM\Column(type="integer") */
 	protected $date;
 
+	public function __construct() {
+		$this->date = time();
+	}
+
 	public function getId()
 	{
 		return $this->id;
@@ -46,7 +50,7 @@ class SoapActionLog {
 		return $this->request = $value;
 	}
 
-	public function setDate(){
-		$this->date = time();
+	public function getDate(){
+		return $this->date;
 	}
 }

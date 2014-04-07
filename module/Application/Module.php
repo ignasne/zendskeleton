@@ -26,6 +26,33 @@ class Module
         return include __DIR__ . '/config/module.config.php';
     }
 
+	public function getControllerConfig()
+	{
+		return array(
+			'factories' => array(
+				'index-controller' => function ($sm) {
+						$controller = new Controller\IndexController();
+						$controller->setStringReverserService(
+							$sm->get('Application\Services\StringReverser')
+						);
+					},
+			),
+		);
+	}
+
+	public function getServiceConfig()
+	{
+		return array(
+			'factories' => array(
+				'Application\Services\StringReverser' => function ($sm) {
+						$stringReverserService = new Services\StringReverser();
+
+						return $stringReverserService;
+					},
+			),
+		);
+	}
+
     public function getAutoloaderConfig()
     {
         return array(
