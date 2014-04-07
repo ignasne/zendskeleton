@@ -3,15 +3,13 @@ namespace Application\Services;
 
 use Application\Entity;
 
-class ActionLogger
+interface AcionLoggerInterface
 {
-	protected $_objectManager;
+	public function logAction($originalString, $reversedString);
+}
 
-	public function __construct()
-	{
-		$this->getObjectManager();
-	}
-
+class ActionLogger implements AcionLoggerInterface
+{
 	public function logAction($originalString, $reversedString)
 	{
 		$soapActionLog = new \Application\Entity\SoapActionLog();
@@ -19,18 +17,11 @@ class ActionLogger
 		$soapActionLog->setRequest($originalString);
 		$soapActionLog->setResponse($reversedString);
 
-		$this->_objectManager->persist($soapActionLog);
-		$this->_objectManager->flush();
+		//$this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+
+		//$this->_objectManager->persist($soapActionLog);
+		//$this->_objectManager->flush();
 
 		return true;
-	}
-
-	protected function getObjectManager()
-	{
-		if (!$this->_objectManager) {
-			$this->_objectManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
-		}
-
-		return $this->_objectManager;
 	}
 }

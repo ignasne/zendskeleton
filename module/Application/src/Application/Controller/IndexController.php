@@ -16,7 +16,7 @@ use Zend\View\Model\ViewModel;
 use Zend\Soap\Client;
 use Zend\Soap\Server;
 use Zend\Soap\AutoDiscover;
-
+use Zend\Di;
 use Application\Services;
 
 require_once 'C:\www\zendskeleton\module\Application\src\Services\StringReverser.php';
@@ -31,16 +31,24 @@ class IndexController extends AbstractActionController
 
 	}
 
-	public function setStringReverserService(Services\StringReverser $service)
+	public function setStringReverserService(Services\StringReverserInterface $service)
 	{
+		print_r($service); exit;
 		$this->service = $service;
 	}
 
     public function indexAction()
     {
+	    $sm = $this->getServiceLocator();
+	    $aa = $sm->get('Application\Services\StringReverser');
 
+	    print_r($aa->reverseString("1234567891234567891234567791234567891234567891234567791248798745")); exit;
 
-	    print_r($this->service->reverseString("abc")); die();
+	    $di = new \Zend\Di\Di();
+
+	    $this->service = $di->get('Application\Services\StringReverser');
+
+	    print_r($this->service->reverseString("1234567891234567891234567791234567891234567891234567791248798745"));
 
         return new ViewModel();
     }

@@ -1,8 +1,14 @@
 <?php
 namespace Application\Services;
 
+use Zend\Text\Exception\UnexpectedValueException;
 
-class StringReverser
+interface StringReverserInterface
+{
+	public function reverseString($string);
+}
+
+class StringReverser implements StringReverserInterface
 {
 	/**
 	 * Returns test list
@@ -13,6 +19,15 @@ class StringReverser
 	public function reverseString($string)
 	{
 		$reversedString = "";
+
+		if(empty($string))
+		{
+			throw new UnexpectedValueException("Empty string value. String value should be not empty!");
+		}
+		elseif(strlen($string) != 64)
+		{
+			throw new UnexpectedValueException("Given string should be exactly 64 characters length. String length is: " . strlen($string));
+		}
 
 		$reversedString = strrev($string);
 
