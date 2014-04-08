@@ -6,7 +6,7 @@ namespace Application\Services;
  * Class ActionLogger
  * @package Application\Services
  */
-class ActionLogger implements ActionLoggerInterface
+class ActionLogger implements \Application\Services\ActionLoggerInterface
 {
 	/**
 	 * Doctrine ORM object

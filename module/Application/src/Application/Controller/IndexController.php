@@ -92,7 +92,7 @@ class IndexController extends AbstractActionController
 
 		$client = new Client($url);
 
-		var_dump($client->reverseString("1234567891234567891234567791234567891234567891234567791248798745"));
+		echo $client->reverseString("1234567891234567891234567791234567891234567891234567791248798745");
 
 		return $this->getResponse();
 	}

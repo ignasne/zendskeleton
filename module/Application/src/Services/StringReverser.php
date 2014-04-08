@@ -21,7 +21,7 @@ class StringReverser implements \Application\Services\StringReverserInterface
 	/**
 	 * Sets action logger instance
 	 *
-	 * @param ActionLoggerInterface $actionLogger
+	 * @param ActionLogger $actionLogger
 	 */
 	public function setActionLogger(\Application\Services\ActionLoggerInterface $actionLogger)
 	{
