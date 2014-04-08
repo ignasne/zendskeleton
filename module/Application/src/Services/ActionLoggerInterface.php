@@ -1,5 +1,7 @@
 <?php
 
+namespace Application\Services;
+
 /**
  * Interface ActionLoggerInterface
  * @package Application\Services

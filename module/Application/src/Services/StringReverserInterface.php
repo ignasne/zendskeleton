@@ -1,5 +1,7 @@
 <?php
 
+namespace Application\Services;
+
 /**
  * Interface StringReverserInterface
  * @package Application\Services
