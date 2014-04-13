@@ -9,21 +9,21 @@ namespace Application\Service;
 class ActionLogger implements \Application\Service\ActionLoggerInterface
 {
 	/**
-	 * Doctrine ORM object
+	 * Class responsible for action logging
 	 *
 	 * @var
 	 */
-	protected $orm;
+	protected $logger;
 
 	/**
-	 * Sets Doctrine orm object
+	 * Sets logger object
 	 *
-	 * @param \Doctrine\ORM\EntityManagerInterface $orm
+	 * @param logger $logger
 	 * @return mixed|void
 	 */
-	public function setOrm(\Doctrine\ORM\EntityManagerInterface $orm)
+	public function setLogger($logger)
 	{
-		$this->orm = $orm;
+		$this->logger = $logger;
 	}
 
 	/**
@@ -41,13 +41,13 @@ class ActionLogger implements \Application\Service\ActionLoggerInterface
 		$soapActionLog->setRequest($originalString);
 		$soapActionLog->setResponse($reversedString);
 
-		if(!($this->orm instanceOf \Doctrine\ORM\EntityManagerInterface))
+		if($this->logger === null || !method_exists($this->logger, "persist"))
 		{
-			throw new Exception("Set ORM object instance of ActionLogger class.");
+			throw new Exception("Set Logger object instance of ActionLogger class.");
 		}
 
-		$this->orm->persist($soapActionLog);
-		$this->orm->flush();
+		$this->logger->persist($soapActionLog);
+		$this->logger->flush();
 
 		return true;
 	}

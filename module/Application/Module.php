@@ -34,7 +34,7 @@ class Module
 					$stringReverserService = new \Application\Service\StringReverser();
 
 					$actionLogger = new \Application\Service\ActionLogger();
-					$actionLogger->setOrm($sm->get('Doctrine\ORM\EntityManager'));
+					$actionLogger->setLogger($sm->get('Doctrine\ORM\EntityManager'));
 
 					$stringReverserService->setActionLogger($actionLogger);
 

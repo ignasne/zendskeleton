@@ -9,10 +9,12 @@ namespace Application\Service;
 interface ActionLoggerInterface
 {
 	/**
-	 * @param \Doctrine\ORM\EntityManagerInterface $orm
+	 * Setting logger for action logging
+	 *
+	 * @param $logger logger object
 	 * @return mixed
 	 */
-	public function setOrm(\Doctrine\ORM\EntityManagerInterface $orm);
+	public function setLogger($logger);
 
 	/**
 	 * @param $originalString
