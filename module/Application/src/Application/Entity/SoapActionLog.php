@@ -10,16 +10,16 @@ class SoapActionLog {
 	 * @ORM\GeneratedValue(strategy="AUTO")
 	 * @ORM\Column(type="integer")
 	 */
-	protected $id;
+	private $id;
 
 	/** @ORM\Column(type="string") */
-	protected $request;
+	private $request;
 
 	/** @ORM\Column(type="string") */
-	protected $response;
+	private $response;
 
 	/** @ORM\Column(type="integer") */
-	protected $date;
+	private $date;
 
 	/**
 	 * Sets log item creation date

@@ -45,8 +45,9 @@ class IndexController extends AbstractActionController
 	 */
 	public function soapAction()
 	{
-		$server = new Server(null,
-			array('uri' => 'http://zendskeleton.localhost/application/index/wsdl'));
+		$wsdlUrl = $this->url()->fromRoute("application/default", array("controller" => "index", "action" => "wsdl"), array('force_canonical' => true));
+
+		$server = new Server(null, array('uri' => $wsdlUrl));
 
 		$sm = $this->getServiceLocator();
 		$stringReserver = $sm->get('Application\Service\StringReverser');
@@ -67,6 +68,8 @@ class IndexController extends AbstractActionController
 	 */
 	public function wsdlAction()
 	{
+		$soapUrl = $this->url()->fromRoute("application/default", array("controller" => "index", "action" => "soap"), array('force_canonical' => true));
+
 		$complexTypeStrategy = new \Zend\Soap\Wsdl\ComplexTypeStrategy\AnyType();
 		$complexTypeStrategy->addComplexType("ActionLoggerInterface");
 
@@ -74,7 +77,7 @@ class IndexController extends AbstractActionController
 		$wsdl->setComplexTypeStrategy($complexTypeStrategy);
 		$wsdl->setClass('Application\Service\StringReverser');
 
-		$wsdl->setUri('http://zendskeleton.localhost/application/index/soap');
+		$wsdl->setUri($soapUrl);
 
 		$wsdl->handle();
 		return $this->getResponse();
@@ -87,18 +90,11 @@ class IndexController extends AbstractActionController
 	 */
 	public function clientAction()
 	{
-		$url = 'http://zendskeleton.localhost/application/index/wsdl';
+		$wsdlUrl = $this->url()->fromRoute("application/default", array("controller" => "index", "action" => "wsdl"), array('force_canonical' => true));
 
-		$client = new Client($url);
+		$client = new Client($wsdlUrl);
 
-		try
-		{
-			$client->reverseString("1234567891234567891234567791234567891234567891234567791248798745d");
-		}
-		catch(UnexpectedValueException $e)
-		{
-			echo "Exception occured: " . $e->getMessage();
-		}
+		echo $client->reverseString("1234567891234567891234567791234567891234567891234567791248798745");
 
 		return $this->getResponse();
 	}
