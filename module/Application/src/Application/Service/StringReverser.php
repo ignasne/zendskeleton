@@ -1,5 +1,5 @@
 <?php
-namespace Application\Services;
+namespace Application\Service;
 
 use Symfony\Component\Console\Application;
 use Zend\Text\Exception\UnexpectedValueException;
@@ -7,23 +7,24 @@ use Zend\Text\Exception\UnexpectedValueException;
 
 /**
  * Class StringReverser
- * @package Application\Services
+ * @package Application\Service
  */
-class StringReverser implements \Application\Services\StringReverserInterface
+class StringReverser implements \Application\Service\StringReverserInterface
 {
 	/**
 	 * Logging action object
 	 *
-	 * @var
+	 * @var \Application\Service\ActionLoggerInterface
 	 */
 	protected $actionLogger;
 
 	/**
 	 * Sets action logger instance
 	 *
-	 * @param ActionLogger $actionLogger
+	 * @param \Application\Service\ActionLoggerInterface $actionLogger
+	 * @return mixed|void
 	 */
-	public function setActionLogger(\Application\Services\ActionLoggerInterface $actionLogger)
+	public function setActionLogger(\Application\Service\ActionLoggerInterface $actionLogger)
 	{
 		$this->actionLogger = $actionLogger;
 	}
@@ -32,7 +33,8 @@ class StringReverser implements \Application\Services\StringReverserInterface
 	 * Returns reversed string
 	 *
 	 * @param $string
-	 * @return string
+	 * @return mixed|string
+	 * @throws \Zend\Text\Exception\UnexpectedValueException
 	 */
 	public function reverseString($string)
 	{

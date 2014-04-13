@@ -1,10 +1,10 @@
 <?php
 
-namespace Application\Services;
+namespace Application\Service;
 
 /**
  * Interface ActionLoggerInterface
- * @package Application\Services
+ * @package Application\Service
  */
 interface ActionLoggerInterface
 {

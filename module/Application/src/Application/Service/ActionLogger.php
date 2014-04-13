@@ -1,12 +1,12 @@
 <?php
-namespace Application\Services;
+namespace Application\Service;
 
 
 /**
  * Class ActionLogger
- * @package Application\Services
+ * @package Application\Service
  */
-class ActionLogger implements \Application\Services\ActionLoggerInterface
+class ActionLogger implements \Application\Service\ActionLoggerInterface
 {
 	/**
 	 * Doctrine ORM object
@@ -32,6 +32,7 @@ class ActionLogger implements \Application\Services\ActionLoggerInterface
 	 * @param $originalString
 	 * @param $reversedString
 	 * @return bool|mixed
+	 * @throws Exception
 	 */
 	public function logAction($originalString, $reversedString)
 	{

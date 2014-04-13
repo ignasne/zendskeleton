@@ -30,10 +30,10 @@ class Module
 	{
 		return array(
 			'factories' => array(
-				'Application\Services\StringReverser' => function ($sm) {
-					$stringReverserService = new \Application\Services\StringReverser();
+				'Application\Service\StringReverser' => function ($sm) {
+					$stringReverserService = new \Application\Service\StringReverser();
 
-					$actionLogger = new Services\ActionLogger();
+					$actionLogger = new \Application\Service\ActionLogger();
 					$actionLogger->setOrm($sm->get('Doctrine\ORM\EntityManager'));
 
 					$stringReverserService->setActionLogger($actionLogger);

@@ -18,11 +18,6 @@ use Zend\Soap\Server;
 use Zend\Soap\AutoDiscover;
 use Zend\Di;
 
-require_once 'C:\www\zendskeleton\module\Application\src\Services\StringReverser.php';
-require_once 'C:\www\zendskeleton\module\Application\src\Services\ActionLogger.php';
-require_once 'C:\www\zendskeleton\module\Application\src\Services\StringReverserInterface.php';
-require_once 'C:\www\zendskeleton\module\Application\src\Services\ActionLoggerInterface.php';
-
 /**
  * Class IndexController
  * @package Application\Controller
@@ -37,7 +32,7 @@ class IndexController extends AbstractActionController
 	public function indexAction()
     {
 	    $sm = $this->getServiceLocator();
-	    $stringReserver = $sm->get('Application\Services\StringReverser');
+	    $stringReserver = $sm->get('Application\Service\StringReverser');
 
 	    var_dump($stringReserver->reverseString("1234567891234567891234567791234567891234567891234567791248798745"));
 
@@ -55,7 +50,7 @@ class IndexController extends AbstractActionController
 			array('uri' => 'http://zendskeleton.localhost/application/index/wsdl'));
 
 		$sm = $this->getServiceLocator();
-		$stringReserver = $sm->get('Application\Services\StringReverser');
+		$stringReserver = $sm->get('Application\Service\StringReverser');
 
 		$server->setObject($stringReserver);
 
@@ -71,9 +66,12 @@ class IndexController extends AbstractActionController
 	 */
 	public function wsdlAction()
 	{
-		$wsdl = new AutoDiscover();
+		$complexTypeStrategy = new \Zend\Soap\Wsdl\ComplexTypeStrategy\AnyType();
+		$complexTypeStrategy->addComplexType("ActionLoggerInterface");
 
-		$wsdl->setClass('Application\Services\StringReverser');
+		$wsdl = new AutoDiscover();
+		$wsdl->setComplexTypeStrategy($complexTypeStrategy);
+		$wsdl->setClass('Application\Service\StringReverser');
 
 		$wsdl->setUri('http://zendskeleton.localhost/application/index/soap');
 

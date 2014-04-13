@@ -1,10 +1,10 @@
 <?php
 
-namespace Application\Services;
+namespace Application\Service;
 
 /**
  * Interface StringReverserInterface
- * @package Application\Services
+ * @package Application\Service
  */
 interface StringReverserInterface
 {
@@ -12,7 +12,7 @@ interface StringReverserInterface
 	 * @param ActionLoggerInterface $actionLogger
 	 * @return mixed
 	 */
-	public function setActionLogger(\Application\Services\ActionLoggerInterface $actionLogger);
+	public function setActionLogger(\Application\Service\ActionLoggerInterface $actionLogger);
 
 	/**
 	 * @param $string
