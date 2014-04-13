@@ -45,7 +45,7 @@ class StringReverserTests extends PHPUnit_Framework_TestCase
 			'UnexpectedValueException', 'Empty string value. String value should be not empty!'
 		);
 
-		$stringReverser = new Application\Service\StringReverser();
+		$stringReverser = new \Application\Service\StringReverser();
 
 		$stringReverser->reverseString("");
 	}
@@ -56,7 +56,7 @@ class StringReverserTests extends PHPUnit_Framework_TestCase
 			'UnexpectedValueException', 'Given string should be exactly 64 characters length. String length is: 3'
 		);
 
-		$stringReverser = new Application\Service\StringReverser();
+		$stringReverser = new \Application\Service\StringReverser();
 
 		$stringReverser->reverseString("abc");
 	}
@@ -66,7 +66,7 @@ class StringReverserTests extends PHPUnit_Framework_TestCase
 		$stringToReverse = "1234567891234567891234567791234567891234567891234567791248798745";
 		$staticResultFromStringReverser = "5478978421977654321987654321987654321977654321987654321987654321";
 
-		$stringReverser = new Application\Service\StringReverser();
+		$stringReverser = new \Application\Service\StringReverser();
 
 		$resultFromStringReverser = $stringReverser->reverseString($stringToReverse);
 

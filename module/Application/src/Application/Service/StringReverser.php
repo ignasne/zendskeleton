@@ -50,14 +50,7 @@ class StringReverser implements \Application\Service\StringReverserInterface
 			throw new UnexpectedValueException("Given string should be exactly 64 characters length. String length is: " . strlen($string));
 		}
 
-		try
-		{
-			$reversedString = strrev($string);
-		}
-		catch(Exception $e)
-		{
-			echo 'Error reversing string: ' .  $e->getMessage();
-		}
+		$reversedString = strrev($string);
 
 		if($this->actionLogger != null)
 		{
