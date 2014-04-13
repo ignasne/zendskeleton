@@ -9,7 +9,6 @@
 
 namespace Application\Controller;
 
-use Composer\Console\Application;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
@@ -54,6 +53,8 @@ class IndexController extends AbstractActionController
 
 		$server->setObject($stringReserver);
 
+		$server->registerFaultException(array("\Zend\Soap\Exception\UnexpectedValueException"));
+
 		$server->handle();
 
 		return $this->getResponse();
@@ -90,7 +91,14 @@ class IndexController extends AbstractActionController
 
 		$client = new Client($url);
 
-		echo $client->reverseString("1234567891234567891234567791234567891234567891234567791248798745");
+		try
+		{
+			$client->reverseString("1234567891234567891234567791234567891234567891234567791248798745d");
+		}
+		catch(UnexpectedValueException $e)
+		{
+			echo "Exception occured: " . $e->getMessage();
+		}
 
 		return $this->getResponse();
 	}

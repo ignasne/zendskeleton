@@ -2,7 +2,7 @@
 namespace Application\Service;
 
 use Symfony\Component\Console\Application;
-use Zend\Text\Exception\UnexpectedValueException;
+use \Zend\Soap\Exception\UnexpectedValueException;
 
 
 /**
@@ -34,7 +34,7 @@ class StringReverser implements \Application\Service\StringReverserInterface
 	 *
 	 * @param $string
 	 * @return mixed|string
-	 * @throws \Zend\Text\Exception\UnexpectedValueException
+	 * @throws \Zend\Soap\Exception\UnexpectedValueException
 	 */
 	public function reverseString($string)
 	{
